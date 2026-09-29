@@ -8,7 +8,7 @@ const interests = [
   {
     icon: Code2,
     title: "Technical interests",
-    body: "Modern web development, typed JavaScript, REST API design, and relational databases.",
+    body: "Backend development with Node.js and REST APIs, database design, and practical web applications.",
   },
   {
     icon: GraduationCap,

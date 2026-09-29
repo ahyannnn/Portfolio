@@ -1,21 +1,21 @@
 export const site = {
-  name: "[YOUR NAME]",
-  shortName: "[YOUR NAME]",
-  role: "IT Student & Aspiring Developer",
+  name: "Ian George Sanico",
+  shortName: "Ian Sanico",
+  role: "IT Student & Aspiring Full-Stack Developer",
   tagline:
-    "IT student building clean, practical web applications with modern tools.",
+    "IT student focused on backend development — building reliable APIs, databases, and clean web applications with modern tools.",
   description:
-    "Portfolio of an IT student showcasing projects, skills, education, and experience in modern web development.",
-  // TODO: Replace with your real domain once deployed, e.g. https://yourname.dev
+    "Portfolio of Ian George Sanico, an IT student and aspiring full-stack developer showcasing projects, skills, education, and experience in modern web development.",
+  // TODO: Replace with your real domain once deployed, e.g. https://yourdomain.dev
   url: "https://example.com",
-  email: "[YOUR EMAIL]",
-  github: "https://github.com/[YOUR GITHUB]",
-  linkedin: "https://linkedin.com/in/[YOUR LINKEDIN]",
+  email: "iangeorgesanico@gmail.com",
+  github: "https://github.com/ahyannnn",
+  linkedin: "https://www.linkedin.com/in/ian-george-sanico-6a3b19435",
   resumeHref: "/resume.pdf",
-  university: "[YOUR UNIVERSITY]",
-  degree: "[YOUR DEGREE / PROGRAM]",
-  period: "[START] — [END]",
-  location: "[YOUR CITY, COUNTRY]",
+  university: "Pambayang Dalubhasaan ng Marilao",
+  degree: "BS Information Technology",
+  period: "2023 — 2027",
+  location: "Marilao, Bulacan, Philippines",
 } as const;
 
 export type Site = typeof site;

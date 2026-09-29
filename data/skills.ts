@@ -17,13 +17,18 @@ export const skillCategories: SkillCategory[] = [
   },
   {
     title: "Backend",
-    description: "APIs and server logic used in school and capstone work.",
-    skills: ["Node.js", "REST APIs"],
+    description: "APIs and server logic used in capstone and school work.",
+    skills: ["Node.js", "Express.js", "REST APIs"],
   },
   {
     title: "Database",
-    description: "Relational data modeling and queries.",
-    skills: ["MySQL", "PostgreSQL"],
+    description: "Data modeling and queries across SQL and NoSQL.",
+    skills: ["MongoDB", "MySQL", "PostgreSQL"],
+  },
+  {
+    title: "Mobile",
+    description: "Companion mobile app for the SOLARIS capstone.",
+    skills: ["Flutter"],
   },
   {
     title: "Tools",

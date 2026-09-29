@@ -53,7 +53,7 @@ export function Navbar() {
           className="font-mono text-sm font-semibold tracking-tight text-foreground"
           onClick={() => setOpen(false)}
         >
-          {site.shortName === "[YOUR NAME]" ? "portfolio.dev" : site.shortName}
+          {site.shortName}
           <span className="text-accent" aria-hidden="true">
             _
           </span>

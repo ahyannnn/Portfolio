@@ -39,17 +39,8 @@ export function Hero() {
               id="hero-heading"
               className="mt-4 text-4xl font-semibold tracking-tight text-foreground sm:text-5xl"
             >
-              {site.name === "[YOUR NAME]" ? (
-                <>
-                  Hi, I&apos;m [YOUR NAME]
-                  <span className="text-accent">.</span>
-                </>
-              ) : (
-                <>
-                  Hi, I&apos;m {site.name}
-                  <span className="text-accent">.</span>
-                </>
-              )}
+              Hi, I&apos;m {site.name}
+              <span className="text-accent">.</span>
             </h1>
           </motion.div>
 
@@ -60,9 +51,9 @@ export function Hero() {
             custom={1}
             className="mt-5 max-w-xl text-lg leading-relaxed text-muted-foreground"
           >
-            {site.tagline} I focus on clean interfaces, typed code, and
-            practical projects — currently building SOLARIS, a solar energy
-            monitoring system for my capstone.
+            {site.tagline} I focus on backend development — APIs, databases,
+            and clean interfaces — currently building SOLARIS, a booking and
+            billing system for solar projects.
           </motion.p>
 
           <motion.div
@@ -152,9 +143,9 @@ export function Hero() {
                 <span className="text-foreground">cat focus.txt</span>
                 {"\n"}
                 <span className="text-muted-foreground">
-                  typescript · react · next.js
+                  node · express · mongodb
                   {"\n"}
-                  rest apis · sql · git
+                  rest apis · flutter · git
                 </span>
                 {"\n\n"}
                 <span className="text-muted-foreground">$ </span>

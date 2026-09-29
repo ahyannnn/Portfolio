@@ -3,36 +3,52 @@ import type { Project } from "@/types";
 /**
  * Add new projects here — they automatically appear in the grid
  * and get a detail page at /projects/[slug].
- *
- * TODO (owner): fill in SOLARIS details below. Do not invent specs —
- * leave a field empty / remove the link if it is not ready yet.
  */
 export const projects: Project[] = [
   {
     slug: "solaris",
     name: "SOLARIS",
-    tagline: "Solar energy monitoring / management information system.",
+    tagline: "Booking and billing system for solar projects.",
     description:
-      "IT capstone project for monitoring and managing solar energy data. Built as a team project with a focus on clean data presentation and practical reporting.",
+      "Team capstone project for booking and billing solar projects, with a companion mobile app. I work on the backend — APIs and data handling for bookings, billing, and project records.",
     details: [
-      "SOLARIS is an IT capstone information system for solar energy monitoring and management.",
-      "TODO: Add 1–2 sentences about the problem it solves and who it is for.",
-      "TODO: Add your specific role and contributions (e.g. frontend, API integration, database design).",
-      "TODO: List the real stack used (e.g. Next.js, REST API, MySQL/PostgreSQL) only once confirmed.",
+      "SOLARIS is a booking and billing system for solar projects, built as a team capstone.",
+      "Web client built with the MERN stack (MongoDB, Express.js, React, Node.js) exposing REST APIs.",
+      "Companion mobile app built with Flutter.",
+      "My role: backend developer — API endpoints and data handling for bookings, billing, and project records.",
     ],
-    technologies: ["Next.js", "TypeScript", "REST APIs", "MySQL"],
+    technologies: [
+      "MongoDB",
+      "Express.js",
+      "React",
+      "Node.js",
+      "Flutter",
+      "REST APIs",
+    ],
     type: "Capstone",
     featured: true,
-    // TODO: Replace with the real repository URL, or remove if private.
-    githubUrl: "https://github.com/[YOUR GITHUB]/solaris",
-    // TODO: Add live demo URL when available, otherwise omit.
-    // liveUrl: "https://solaris.example.com",
+    githubUrl: "https://github.com/ahyannnn/Solaris",
+    liveUrl: "https://solarisiot.com",
     // TODO: Add a screenshot to /public/projects/solaris.png and uncomment:
     // image: "/projects/solaris.png",
-    // imageAlt: "SOLARIS dashboard showing solar monitoring data",
-    year: "[YEAR]",
-    role: "[YOUR ROLE — e.g. Frontend Developer]",
+    // imageAlt: "SOLARIS booking and billing dashboard",
+    role: "Backend Developer",
     status: "In Progress",
+  },
+  {
+    slug: "rentahanan",
+    name: "Rentahanan",
+    tagline: "Apartment application and billing system.",
+    description:
+      "Third-year school project — a web system for apartment applications and billing, covering tenant applications and billing records.",
+    details: [
+      "School project built in third year for apartment applications and billing.",
+      "Handles tenant applications and billing records for apartment management.",
+      "TODO: Add the real stack and your specific contributions once confirmed.",
+    ],
+    technologies: ["REST APIs"],
+    type: "Coursework",
+    githubUrl: "https://github.com/ahyannnn/Rentahanan",
   },
   {
     slug: "portfolio",
@@ -47,7 +63,7 @@ export const projects: Project[] = [
     ],
     technologies: ["Next.js", "TypeScript", "Tailwind CSS"],
     type: "Personal",
-    githubUrl: "https://github.com/[YOUR GITHUB]",
+    githubUrl: "https://github.com/ahyannnn",
     year: "2026",
     role: "Designer & Developer",
     status: "In Progress",
