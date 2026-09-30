@@ -32,7 +32,7 @@ export const skillCategories: SkillCategory[] = [
   },
   {
     title: "Tools",
-    description: "Daily workflow for building and shipping.",
-    skills: ["Git", "GitHub", "VS Code", "Figma"],
+    description: "Daily workflow for building, deploying, and shipping.",
+    skills: ["Git", "GitHub", "VS Code", "Figma", "Cloudflare Workers"],
   },
 ];
