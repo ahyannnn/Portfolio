@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { Resend } from "resend";
 import { site } from "@/lib/site";
 
@@ -7,6 +8,12 @@ import { site } from "@/lib/site";
  *
  * Secrets (RESEND_API_KEY, CONTACT_TO, CONTACT_FROM) are read ONLY here on
  * the server. Nothing under NEXT_PUBLIC_ — the client bundle never sees them.
+ *
+ * Env sources: `process.env` covers local dev (`.env.local`) and Node
+ * runtimes; on Cloudflare Workers, secrets/vars live on the Worker's `env`
+ * object, exposed via `getCloudflareContext().env` — so both are checked.
+ * RESEND_API_KEY must be a Worker **Secret** (encrypted); CONTACT_TO/FROM
+ * are plain `vars` committed in wrangler.json.
  *
  * Enforcement layers (per visitor = one successful send):
  *  1. HttpOnly `contact_sent` cookie — set on success, rejected on repeat.
@@ -55,6 +62,24 @@ function limitResponse(message: string, retryAfterSec?: number) {
   const res = NextResponse.json({ ok: false, error: message }, { status: 429 });
   if (retryAfterSec != null) res.headers.set("Retry-After", String(retryAfterSec));
   return res;
+}
+
+/**
+ * Server-only env lookup. `process.env` first (local `.env.local` / Node),
+ * then the Cloudflare Worker `env` (dashboard vars + secrets). Throws are
+ * swallowed — outside the OpenNext runtime there is no Cloudflare context.
+ */
+function getServerEnv(name: string): string | undefined {
+  const fromProcess = process.env[name];
+  if (fromProcess) return fromProcess;
+  try {
+    const value = (
+      getCloudflareContext().env as Record<string, unknown> | undefined
+    )?.[name];
+    return typeof value === "string" && value.length > 0 ? value : undefined;
+  } catch {
+    return undefined;
+  }
 }
 
 export async function POST(req: NextRequest) {
@@ -158,8 +183,8 @@ export async function POST(req: NextRequest) {
     return limitResponse("The inbox is busy — please try again later.", 3600);
   }
 
-  // ---- Secrets stay server-side ----
-  const apiKey = process.env.RESEND_API_KEY;
+  // ---- Secrets stay server-side (process.env locally, Worker env in prod) ----
+  const apiKey = getServerEnv("RESEND_API_KEY");
   if (!apiKey) {
     console.error("[contact] missing RESEND_API_KEY");
     return NextResponse.json(
@@ -167,8 +192,8 @@ export async function POST(req: NextRequest) {
       { status: 500 }
     );
   }
-  const to = process.env.CONTACT_TO ?? site.email;
-  const from = process.env.CONTACT_FROM ?? "Portfolio <onboarding@resend.dev>";
+  const to = getServerEnv("CONTACT_TO") ?? site.email;
+  const from = getServerEnv("CONTACT_FROM") ?? "Portfolio <onboarding@resend.dev>";
 
   try {
     const resend = new Resend(apiKey);

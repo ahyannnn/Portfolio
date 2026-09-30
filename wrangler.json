@@ -5,5 +5,9 @@
   "compatibility_date": "2025-06-01",
   "compatibility_flags": ["nodejs_compat"],
   "assets": { "directory": ".open-next/assets", "binding": "ASSETS" },
-  "images": { "binding": "IMAGES" }
+  "images": { "binding": "IMAGES" },
+  "vars": {
+    "CONTACT_TO": "iangeorgesanico@gmail.com",
+    "CONTACT_FROM": "Portfolio <onboarding@resend.dev>"
+  }
 }
