@@ -1,162 +1,208 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, FileText } from "lucide-react";
-import { GithubIcon, LinkedinIcon } from "./icons";
+import { ArrowRight, ArrowUpRight, FileText } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { site } from "@/lib/site";
+import { images } from "@/lib/images";
+import { Portrait } from "@/components/media/Portrait";
+import { GithubIcon, LinkedinIcon } from "./icons";
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
-  show: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.55, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] as const },
-  }),
-};
+const ease = [0.22, 1, 0.36, 1] as const;
 
-export function Hero() {
-  const reduceMotion = useReducedMotion();
-
+function Rise({
+  delay,
+  children,
+  className,
+}: {
+  delay: number;
+  children: React.ReactNode;
+  className?: string;
+}) {
+  const reduce = useReducedMotion();
+  if (reduce) return <div className={className}>{children}</div>;
   return (
-    <section
-      id="home"
-      aria-labelledby="hero-heading"
-      className="scroll-mt-20 py-16 sm:py-24"
+    <motion.div
+      initial={{ opacity: 0, y: 26 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.7, delay, ease }}
+      className={className}
     >
-      <div className="grid items-center gap-12 lg:grid-cols-[1.2fr_0.8fr]">
-        <div>
-          <motion.div
-            variants={fadeUp}
-            initial={reduceMotion ? false : "hidden"}
-            animate="show"
-            custom={0}
-          >
-            <p className="font-mono text-xs uppercase tracking-[0.2em] text-accent">
-              {site.role}
-            </p>
-            <h1
-              id="hero-heading"
-              className="mt-4 text-4xl font-semibold tracking-tight text-foreground sm:text-5xl"
-            >
-              Hi, I&apos;m {site.name}
-              <span className="text-accent">.</span>
-            </h1>
-          </motion.div>
+      {children}
+    </motion.div>
+  );
+}
 
-          <motion.p
-            variants={fadeUp}
-            initial={reduceMotion ? false : "hidden"}
-            animate="show"
-            custom={1}
-            className="mt-5 max-w-xl text-lg leading-relaxed text-muted-foreground"
-          >
-            {site.tagline} I focus on backend development — APIs, databases,
-            and clean interfaces — currently building SOLARIS, a booking and
-            billing system for solar projects.
-          </motion.p>
+/** Masked line reveal for display type — lines slide up from behind a mask. */
+function MaskedLine({ delay, children }: { delay: number; children: React.ReactNode }) {
+  const reduce = useReducedMotion();
+  if (reduce) return <span className="block">{children}</span>;
+  return (
+    <span className="block overflow-hidden pb-[0.08em] -mb-[0.08em]">
+      <motion.span
+        className="block"
+        initial={{ y: "112%" }}
+        animate={{ y: "0%" }}
+        transition={{ duration: 0.85, delay, ease }}
+      >
+        {children}
+      </motion.span>
+    </span>
+  );
+}
 
-          <motion.div
-            variants={fadeUp}
-            initial={reduceMotion ? false : "hidden"}
-            animate="show"
-            custom={2}
-            className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center"
-          >
-            <Link
-              href="#projects"
-              className="inline-flex h-11 items-center justify-center gap-2 rounded-md bg-foreground px-6 text-sm font-medium text-background transition-opacity hover:opacity-90 active:scale-[0.98]"
-            >
-              View projects
-              <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </Link>
-            <a
-              href={site.resumeHref}
-              className="inline-flex h-11 items-center justify-center gap-2 rounded-md border border-border px-6 text-sm font-medium text-foreground transition-colors hover:bg-muted active:scale-[0.98]"
-            >
-              <FileText className="h-4 w-4" aria-hidden="true" />
-              View resume
-            </a>
-          </motion.div>
+/**
+ * Editorial hero — asymmetric type + portrait composition.
+ * Answers WHO / WHAT / WHY without template greeting.
+ */
+export function Hero() {
+  return (
+    <section id="top" aria-labelledby="hero-heading" className="scroll-mt-20">
+      <div className="mx-auto w-full max-w-[1280px] px-5 pb-14 pt-10 sm:px-8 sm:pt-16 lg:pb-20">
+        {/* top meta strip */}
+        <Rise delay={0}>
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 border-b border-border pb-4 font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
+            <span><strong className="font-semibold text-accent">Folio</strong> — 2026</span>
+            <span className="hidden sm:inline">{site.location}</span>
+            <span className="hidden md:inline">{site.role}</span>
+            <span className="ml-auto inline-flex items-center gap-2">
+              <span className="inline-block h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true" />
+              Open to internships
+            </span>
+          </div>
+        </Rise>
 
-          <motion.ul
-            variants={fadeUp}
-            initial={reduceMotion ? false : "hidden"}
-            animate="show"
-            custom={3}
-            aria-label="Profiles"
-            className="mt-6 flex items-center gap-2"
-          >
-            <li>
-              <a
-                href={site.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="GitHub profile"
-                className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+        <div className="mt-8 grid gap-10 sm:mt-12 lg:grid-cols-12 lg:gap-8">
+          {/* Type block — spans 7 */}
+          <div className="lg:col-span-7">
+            <Rise delay={0.06}>
+              <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
+                Ian George Sanico — IT student, backend-leaning
+              </p>
+              <h1
+                id="hero-heading"
+                className="font-display mt-5 max-w-[13ch] text-balance text-[clamp(2.9rem,7.2vw,5.6rem)] font-medium leading-[0.98]"
               >
-                <GithubIcon className="h-4 w-4" aria-hidden="true" />
-              </a>
-            </li>
-            <li>
-              <a
-                href={site.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="LinkedIn profile"
-                className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-              >
-                <LinkedinIcon className="h-4 w-4" aria-hidden="true" />
-              </a>
-            </li>
-            <li className="ml-2 font-mono text-xs text-muted-foreground">
-              {site.location}
-            </li>
-          </motion.ul>
+                <MaskedLine delay={0.12}>Booking systems,</MaskedLine>
+                <MaskedLine delay={0.21}>
+                  <em className="text-accent">built backend-first.</em>
+                </MaskedLine>
+              </h1>
+            </Rise>
+
+            <Rise delay={0.14}>
+              <p className="mt-6 max-w-[52ch] text-[16px] leading-[1.7] text-muted-foreground sm:text-[17px]">
+                I&apos;m Ian — I design APIs, data models, and clean interfaces.
+                Right now I&apos;m building{" "}
+                <Link href="/projects/solaris" className="u-link font-medium text-foreground">
+                  SOLARIS
+                </Link>
+                , a booking &amp; billing system for solar projects (MERN web +
+                Flutter mobile), where I own backend development.
+              </p>
+            </Rise>
+
+            <Rise delay={0.2}>
+              <div className="mt-8 flex flex-wrap items-center gap-3">
+                <Link
+                  href="/#work"
+                  className="group inline-flex h-12 items-center gap-2 bg-foreground px-6 text-sm font-medium text-background transition-transform active:scale-[0.98]"
+                >
+                  View selected work
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+                </Link>
+                <Link
+                  href="/projects/solaris"
+                  className="inline-flex h-12 items-center gap-2 border border-border bg-card px-6 text-sm font-medium transition-colors hover:border-foreground"
+                >
+                  SOLARIS case study
+                  <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                </Link>
+                <a
+                  href={site.resumeHref}
+                  className="u-link inline-flex h-12 items-center gap-2 px-2 text-sm text-muted-foreground hover:text-foreground"
+                >
+                  <FileText className="h-4 w-4" aria-hidden="true" />
+                  Resume
+                </a>
+              </div>
+            </Rise>
+
+            <Rise delay={0.26}>
+              <dl className="mt-10 grid max-w-xl grid-cols-3 divide-x divide-border border-y border-border">
+                {[
+                  ["Focus", "APIs · DB"],
+                  ["Stack", "MERN · Flutter"],
+                  ["Now", "SOLARIS · 2026"],
+                ].map(([k, v]) => (
+                  <div key={k} className="px-4 py-3.5 first:pl-0 sm:px-5">
+                    <dt className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">{k}</dt>
+                    <dd className="mt-1 text-sm font-medium tracking-tight">{v}</dd>
+                  </div>
+                ))}
+              </dl>
+            </Rise>
+
+            <Rise delay={0.3}>
+              <ul aria-label="Profiles" className="mt-6 flex flex-wrap items-center gap-2">
+                <li>
+                  <a href={site.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub profile"
+                    className="inline-flex h-10 items-center gap-2 border border-border px-3.5 text-sm text-muted-foreground transition-colors hover:border-foreground hover:text-foreground">
+                    <GithubIcon className="h-4 w-4" aria-hidden="true" />
+                    <span className="font-mono text-xs">GitHub</span>
+                  </a>
+                </li>
+                <li>
+                  <a href={site.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile"
+                    className="inline-flex h-10 items-center gap-2 border border-border px-3.5 text-sm text-muted-foreground transition-colors hover:border-foreground hover:text-foreground">
+                    <LinkedinIcon className="h-4 w-4" aria-hidden="true" />
+                    <span className="font-mono text-xs">LinkedIn</span>
+                  </a>
+                </li>
+                <li>
+                  <a href={`mailto:${site.email}`} className="u-link ml-2 hidden font-mono text-xs text-muted-foreground hover:text-foreground sm:inline">
+                    {site.email}
+                  </a>
+                </li>
+              </ul>
+            </Rise>
+          </div>
+
+          {/* Portrait block — spans 5, asymmetric offset */}
+          <div className="relative lg:col-span-5">
+            <div className="lg:pl-6 lg:pt-2">
+              <Portrait
+                src={images.profile.src}
+                fallback={images.profile.fallback}
+                alt={images.profile.alt}
+                caption="Ian George Sanico"
+                meta="Marilao · PH"
+                className="mx-auto w-full max-w-[420px] lg:ml-auto lg:mr-0"
+              />
+              {/* overlapping index tag — desktop only */}
+              <div aria-hidden="true" className="pointer-events-none absolute -left-2 top-6 hidden select-none lg:block">
+                <span className="font-display text-[7rem] italic leading-none text-foreground/10">01</span>
+              </div>
+            </div>
+            <Rise delay={0.32} className="mx-auto mt-5 max-w-[420px] lg:ml-auto lg:mr-0 lg:pl-6">
+              <div className="flex items-start justify-between gap-4 border-l-2 border-accent pl-4">
+                <p className="text-[13px] leading-relaxed text-muted-foreground">
+                  Fourth-year {site.degree} at {site.university}. I like
+                  straightforward tools that survive handover — typed APIs,
+                  sane schemas, honest UI.
+                </p>
+              </div>
+            </Rise>
+          </div>
         </div>
 
-        {/* Subtle developer visual — static terminal card, no heavy animation */}
-        <motion.div
-          initial={reduceMotion ? false : { opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
-          aria-hidden="true"
-          className="hidden lg:block"
-        >
-          <div className="overflow-hidden rounded-lg border border-border bg-card">
-            <div className="flex items-center gap-1.5 border-b border-border px-4 py-3">
-              <span className="h-2.5 w-2.5 rounded-full bg-border" />
-              <span className="h-2.5 w-2.5 rounded-full bg-border" />
-              <span className="h-2.5 w-2.5 rounded-full bg-border" />
-              <span className="ml-3 font-mono text-xs text-muted-foreground">
-                ~/portfolio
-              </span>
-            </div>
-            <pre className="overflow-x-auto p-5 font-mono text-[13px] leading-relaxed">
-              <code>
-                <span className="text-muted-foreground">$ </span>
-                <span className="text-foreground">whoami</span>
-                {"\n"}
-                <span className="text-accent">it-student & developer</span>
-                {"\n\n"}
-                <span className="text-muted-foreground">$ </span>
-                <span className="text-foreground">cat focus.txt</span>
-                {"\n"}
-                <span className="text-muted-foreground">
-                  node · express · mongodb
-                  {"\n"}
-                  rest apis · flutter · git
-                </span>
-                {"\n\n"}
-                <span className="text-muted-foreground">$ </span>
-                <span className="text-foreground">open ./solaris</span>
-                {"\n"}
-                <span className="text-accent">▸ capstone: in progress</span>
-                <span className="ml-1 inline-block h-4 w-2 translate-y-0.5 animate-pulse bg-accent" />
-              </code>
-            </pre>
+        {/* bottom strip — scroll cue + stack */}
+        <Rise delay={0.36}>
+          <div className="mt-12 flex flex-wrap items-center justify-between gap-3 border-t border-border pt-4 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
+            <span>Scroll — selected work ↓</span>
+            <span className="hidden sm:inline">Node · Express · MongoDB · REST · Flutter</span>
           </div>
-        </motion.div>
+        </Rise>
       </div>
     </section>
   );

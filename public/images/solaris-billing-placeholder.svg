@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="800" viewBox="0 0 1280 800">
+  <!-- PLACEHOLDER — replace with real screenshot at public/images/solaris-billing.png -->
+  <rect width="1280" height="800" fill="#EFE9DA"/>
+  <rect x="80" y="80" width="1120" height="640" fill="#FFFEFA" stroke="#1B1813" stroke-width="2"/>
+  <rect x="80" y="80" width="1120" height="72" fill="#1B1813"/>
+  <text x="120" y="126" font-family="monospace" font-size="18" fill="#F6F3EC">SOLARIS — Billing record</text>
+  <g font-family="monospace" font-size="15" fill="#1B1813">
+    <text x="140" y="220">Invoice #SLR-0042</text>
+    <text x="140" y="250" fill="#6E6658">5.2 kW rooftop — Marilao, Bulacan</text>
+  </g>
+  <line x1="140" y1="290" x2="1140" y2="290" stroke="#DDD3BF"/>
+  <g font-family="monospace" font-size="14" fill="#6E6658">
+    <text x="140" y="330">ITEM</text><text x="900" y="330">AMOUNT</text>
+  </g>
+  <g font-family="monospace" font-size="15" fill="#1B1813">
+    <text x="140" y="370">Site survey + installation</text><text x="900" y="370">₱ —</text>
+    <text x="140" y="405">Monitoring setup</text><text x="900" y="405">₱ —</text>
+  </g>
+  <rect x="880" y="470" width="260" height="56" fill="#B6470F"/>
+  <text x="1010" y="505" text-anchor="middle" font-family="monospace" font-size="15" fill="#FFF8ED">Mark as billed</text>
+  <text x="640" y="640" text-anchor="middle" font-family="monospace" font-size="16" fill="#1B1813">solaris-billing.png — replace with real UI</text>
+</svg>

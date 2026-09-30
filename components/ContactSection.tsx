@@ -1,12 +1,11 @@
 "use client";
 
 import * as React from "react";
-import { Mail, Send } from "lucide-react";
-import { GithubIcon, LinkedinIcon } from "./icons";
+import { ArrowUpRight, Send } from "lucide-react";
 import { site } from "@/lib/site";
-import { SectionHeading } from "./SectionHeading";
-import { Reveal } from "./Reveal";
-import { Card, CardContent } from "./ui/card";
+import { SectionIndex } from "@/components/editorial/SectionIndex";
+import { Reveal } from "@/components/Reveal";
+import { GithubIcon, LinkedinIcon } from "./icons";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 
@@ -16,17 +15,9 @@ interface FormState {
   message: string;
 }
 
-/**
- * v1 contact form — no backend. Validates input and opens the visitor's
- * email client via mailto:. Ready to swap for Resend/Formspree later
- * by replacing handleSubmit with a server action call.
- */
+/** Closing — oversized type + direct channels, restrained form. */
 export function ContactSection() {
-  const [form, setForm] = React.useState<FormState>({
-    name: "",
-    email: "",
-    message: "",
-  });
+  const [form, setForm] = React.useState<FormState>({ name: "", email: "", message: "" });
   const [errors, setErrors] = React.useState<Partial<FormState>>({});
   const [sent, setSent] = React.useState(false);
 
@@ -46,190 +37,107 @@ export function ContactSection() {
       nextErrors.message = "Please write at least 10 characters.";
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length > 0) return;
-
     const subject = encodeURIComponent(`Portfolio contact from ${form.name}`);
-    const body = encodeURIComponent(
-      `Name: ${form.name}\nEmail: ${form.email}\n\n${form.message}`
-    );
+    const body = encodeURIComponent(`Name: ${form.name}\nEmail: ${form.email}\n\n${form.message}`);
     window.location.href = `mailto:${site.email}?subject=${subject}&body=${body}`;
     setSent(true);
   }
 
   return (
-    <section
-      id="contact"
-      aria-labelledby="contact-heading"
-      className="scroll-mt-20 py-14 sm:py-20"
-    >
-      <div id="contact-heading">
-        <SectionHeading
-          eyebrow="Contact"
-          title="Let's connect"
-          description="Open to internships, collaborations, and feedback on my work. The form opens your email client — no data is stored."
-        />
-      </div>
-
-      <div className="grid gap-4 lg:grid-cols-[0.9fr_1.1fr]">
-        <Reveal>
-          <Card className="h-full">
-            <CardContent className="flex h-full flex-col gap-4 p-6">
-              <h3 className="font-semibold tracking-tight">Direct channels</h3>
-              <ul className="space-y-2 text-sm">
-                <li>
-                  <a
-                    href={`mailto:${site.email}`}
-                    className="inline-flex items-center gap-2 rounded-md px-2 py-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-                  >
-                    <Mail className="h-4 w-4" aria-hidden="true" />
-                    {site.email}
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href={site.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 rounded-md px-2 py-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-                  >
-                    <GithubIcon className="h-4 w-4" aria-hidden="true" />
-                    GitHub
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href={site.linkedin}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 rounded-md px-2 py-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-                  >
-                    <LinkedinIcon className="h-4 w-4" aria-hidden="true" />
-                    LinkedIn
-                  </a>
-                </li>
+    <section id="contact" aria-labelledby="contact-heading" className="scroll-mt-20">
+      <div className="mx-auto w-full max-w-[1280px] px-5 py-16 sm:px-8 sm:py-24">
+        <div id="contact-heading">
+          <SectionIndex
+            index="06"
+            eyebrow="Contact"
+            title={<>Let&apos;s build something <em className="text-accent">reliable.</em></>}
+            description="Open to internships, collaborations, and feedback. The form opens your email client — nothing stored."
+          />
+        </div>
+        <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
+          <div className="lg:col-span-5">
+            <Reveal>
+              <a
+                href={`mailto:${site.email}`}
+                className="group block border-y border-border py-6"
+              >
+                <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">Email</span>
+                <span className="font-display mt-2 block break-all text-2xl leading-tight transition-colors group-hover:text-accent sm:text-3xl">
+                  {site.email}
+                </span>
+              </a>
+            </Reveal>
+            <Reveal delay={0.05}>
+              <ul className="mt-2 divide-y divide-border">
+                {[
+                  { label: "GitHub", href: site.github, Icon: GithubIcon, external: true },
+                  { label: "LinkedIn", href: site.linkedin, Icon: LinkedinIcon, external: true },
+                  { label: "Resume (PDF)", href: site.resumeHref, Icon: ArrowUpRight, external: false },
+                ].map(({ label, href, Icon, external }) => (
+                  <li key={label}>
+                    <a
+                      href={href}
+                      {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                      className="group flex items-center justify-between py-4"
+                    >
+                      <span className="flex items-center gap-3 text-[15px] font-medium">
+                        <Icon className="h-4 w-4 text-muted-foreground transition-colors group-hover:text-accent" aria-hidden="true" />
+                        {label}
+                      </span>
+                      <ArrowUpRight className="h-4 w-4 text-muted-foreground transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent" aria-hidden="true" />
+                    </a>
+                  </li>
+                ))}
               </ul>
-              <p className="mt-auto text-xs leading-relaxed text-muted-foreground">
+            </Reveal>
+            <Reveal delay={0.08}>
+              <p className="mt-6 border-l-2 border-accent pl-4 text-[13px] leading-relaxed text-muted-foreground">
                 Prefer email? Include the project name, timeline, and what
-                you&apos;d like help with.
+                you&apos;d like help with — I reply within a couple of days.
               </p>
-            </CardContent>
-          </Card>
-        </Reveal>
+            </Reveal>
+          </div>
 
-        <Reveal delay={0.06}>
-          <Card>
-            <CardContent className="p-6">
-              <form onSubmit={handleSubmit} noValidate aria-label="Contact form">
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <div>
-                    <label
-                      htmlFor="contact-name"
-                      className="mb-1.5 block text-sm font-medium"
-                    >
-                      Name
-                    </label>
-                    <Input
-                      id="contact-name"
-                      name="name"
-                      autoComplete="name"
-                      placeholder="Jane Doe"
-                      value={form.name}
-                      onChange={(e) => update("name", e.target.value)}
-                      aria-invalid={Boolean(errors.name)}
-                      aria-describedby={
-                        errors.name ? "contact-name-error" : undefined
-                      }
-                    />
-                    {errors.name ? (
-                      <p
-                        id="contact-name-error"
-                        role="alert"
-                        className="mt-1.5 text-xs text-red-600 dark:text-red-400"
-                      >
-                        {errors.name}
-                      </p>
-                    ) : null}
-                  </div>
-                  <div>
-                    <label
-                      htmlFor="contact-email"
-                      className="mb-1.5 block text-sm font-medium"
-                    >
-                      Email
-                    </label>
-                    <Input
-                      id="contact-email"
-                      name="email"
-                      type="email"
-                      autoComplete="email"
-                      placeholder="jane@example.com"
-                      value={form.email}
-                      onChange={(e) => update("email", e.target.value)}
-                      aria-invalid={Boolean(errors.email)}
-                      aria-describedby={
-                        errors.email ? "contact-email-error" : undefined
-                      }
-                    />
-                    {errors.email ? (
-                      <p
-                        id="contact-email-error"
-                        role="alert"
-                        className="mt-1.5 text-xs text-red-600 dark:text-red-400"
-                      >
-                        {errors.email}
-                      </p>
-                    ) : null}
-                  </div>
+          <Reveal delay={0.06} className="lg:col-span-7">
+            <form onSubmit={handleSubmit} noValidate aria-label="Contact form" className="border border-border bg-card p-6 sm:p-9">
+              <div className="grid gap-5 sm:grid-cols-2">
+                <div>
+                  <label htmlFor="contact-name" className="mb-2 block font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">Name</label>
+                  <Input id="contact-name" name="name" autoComplete="name" placeholder="Jane Doe"
+                    value={form.name} onChange={(e) => update("name", e.target.value)}
+                    aria-invalid={Boolean(errors.name)} aria-describedby={errors.name ? "contact-name-error" : undefined} />
+                  {errors.name ? <p id="contact-name-error" role="alert" className="mt-1.5 text-xs text-red-600 dark:text-red-400">{errors.name}</p> : null}
                 </div>
-                <div className="mt-4">
-                  <label
-                    htmlFor="contact-message"
-                    className="mb-1.5 block text-sm font-medium"
-                  >
-                    Message
-                  </label>
-                  <Textarea
-                    id="contact-message"
-                    name="message"
-                    placeholder="Hi — I'd like to talk about…"
-                    value={form.message}
-                    onChange={(e) => update("message", e.target.value)}
-                    aria-invalid={Boolean(errors.message)}
-                    aria-describedby={
-                      errors.message ? "contact-message-error" : undefined
-                    }
-                  />
-                  {errors.message ? (
-                    <p
-                      id="contact-message-error"
-                      role="alert"
-                      className="mt-1.5 text-xs text-red-600 dark:text-red-400"
-                    >
-                      {errors.message}
-                    </p>
-                  ) : null}
+                <div>
+                  <label htmlFor="contact-email" className="mb-2 block font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">Email</label>
+                  <Input id="contact-email" name="email" type="email" autoComplete="email" placeholder="jane@example.com"
+                    value={form.email} onChange={(e) => update("email", e.target.value)}
+                    aria-invalid={Boolean(errors.email)} aria-describedby={errors.email ? "contact-email-error" : undefined} />
+                  {errors.email ? <p id="contact-email-error" role="alert" className="mt-1.5 text-xs text-red-600 dark:text-red-400">{errors.email}</p> : null}
                 </div>
-                <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center">
-                  <button
-                    type="submit"
-                    className="inline-flex h-10 items-center justify-center gap-2 rounded-md bg-foreground px-5 text-sm font-medium text-background transition-opacity hover:opacity-90 active:scale-[0.98]"
-                  >
-                    <Send className="h-4 w-4" aria-hidden="true" />
-                    Send via email
-                  </button>
-                  {sent ? (
-                    <p role="status" className="text-sm text-muted-foreground">
-                      Opening your email client…
-                    </p>
-                  ) : (
-                    <p className="text-xs text-muted-foreground">
-                      No backend yet — integrates with Resend/Formspree later.
-                    </p>
-                  )}
-                </div>
-              </form>
-            </CardContent>
-          </Card>
-        </Reveal>
+              </div>
+              <div className="mt-5">
+                <label htmlFor="contact-message" className="mb-2 block font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">Message</label>
+                <Textarea id="contact-message" name="message" placeholder="Hi — I'd like to talk about…"
+                  value={form.message} onChange={(e) => update("message", e.target.value)}
+                  aria-invalid={Boolean(errors.message)} aria-describedby={errors.message ? "contact-message-error" : undefined} />
+                {errors.message ? <p id="contact-message-error" role="alert" className="mt-1.5 text-xs text-red-600 dark:text-red-400">{errors.message}</p> : null}
+              </div>
+              <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
+                <button type="submit"
+                  className="inline-flex h-11 items-center justify-center gap-2 bg-foreground px-6 text-sm font-medium text-background transition-transform active:scale-[0.98]">
+                  <Send className="h-4 w-4" aria-hidden="true" />
+                  Send via email
+                </button>
+                {sent ? (
+                  <p role="status" className="text-sm text-muted-foreground">Opening your email client…</p>
+                ) : (
+                  <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground">No backend — mailto handoff</p>
+                )}
+              </div>
+            </form>
+          </Reveal>
+        </div>
       </div>
     </section>
   );

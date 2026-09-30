@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="750" viewBox="0 0 600 750">
+  <!-- PLACEHOLDER — replace with real portrait at public/images/profile.jpg (4:5, min 900x1125) -->
+  <rect width="600" height="750" fill="#ECE7D8"/>
+  <g stroke="#C9BFA9" stroke-width="1">
+    <line x1="0" y1="75" x2="600" y2="75"/><line x1="0" y1="150" x2="600" y2="150"/>
+    <line x1="0" y1="225" x2="600" y2="225"/><line x1="0" y1="300" x2="600" y2="300"/>
+    <line x1="0" y1="375" x2="600" y2="375"/><line x1="0" y1="450" x2="600" y2="450"/>
+    <line x1="0" y1="525" x2="600" y2="525"/><line x1="0" y1="600" x2="600" y2="600"/>
+    <line x1="0" y1="675" x2="600" y2="675"/>
+    <line x1="75" y1="0" x2="75" y2="750"/><line x1="150" y1="0" x2="150" y2="750"/>
+    <line x1="225" y1="0" x2="225" y2="750"/><line x1="300" y1="0" x2="300" y2="750"/>
+    <line x1="375" y1="0" x2="375" y2="750"/><line x1="450" y1="0" x2="450" y2="750"/>
+    <line x1="525" y1="0" x2="525" y2="750"/>
+  </g>
+  <rect x="150" y="140" width="300" height="380" fill="none" stroke="#1B1813" stroke-width="2"/>
+  <circle cx="300" cy="270" r="62" fill="none" stroke="#1B1813" stroke-width="2"/>
+  <path d="M218 470 Q300 380 382 470" fill="none" stroke="#1B1813" stroke-width="2"/>
+  <rect x="24" y="24" width="150" height="28" fill="#1B1813"/>
+  <text x="34" y="43" font-family="monospace" font-size="13" fill="#F6F3EC">PORTRAIT 4:5</text>
+  <text x="300" y="580" text-anchor="middle" font-family="monospace" font-size="15" fill="#1B1813">profile.jpg</text>
+  <text x="300" y="604" text-anchor="middle" font-family="monospace" font-size="12" fill="#6E6658">Drop your photo in public/images/</text>
+  <text x="300" y="624" text-anchor="middle" font-family="monospace" font-size="12" fill="#B6470F">Do not use stock — personal photo only</text>
+</svg>

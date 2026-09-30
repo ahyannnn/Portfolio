@@ -3,15 +3,16 @@ import type { EducationItem, ExperienceItem } from "@/types";
 export const experience: ExperienceItem[] = [
   {
     id: "solaris-capstone",
-    role: "Backend Developer — SOLARIS Capstone",
+    role: "Backend Developer & System Architect — SOLARIS Capstone",
     organization: "Pambayang Dalubhasaan ng Marilao",
-    period: "Present",
+    period: "Fourth Year - Present",
     location: "Marilao, Bulacan",
     summary:
       "Team capstone building SOLARIS, a booking and billing system for solar projects (MERN web + Flutter mobile).",
     highlights: [
-      "Build backend API endpoints and data handling for bookings, billing, and project records.",
-      "Collaborate with frontend and mobile teammates on API contracts and data models.",
+      "Designed and implemented the backend architecture and database structure — server-side logic, API endpoints, and data processing.",
+      "Established system infrastructure and communication across web app, backend services, database, and the Flutter companion app.",
+      "Handle system-level testing, debugging, integration, and core technical implementation.",
     ],
     tags: ["Node.js", "Express.js", "MongoDB", "REST APIs", "Flutter"],
     kind: "Project",
@@ -22,12 +23,12 @@ export const experience: ExperienceItem[] = [
     organization: "Pambayang Dalubhasaan ng Marilao",
     period: "Third year",
     summary:
-      "School project — web system for apartment applications and billing.",
+      "School project — web system for apartment applications and billing (React + Flask + MySQL).",
     highlights: [
-      "Built flows for tenant applications and billing records.",
-      "TODO: Add the real stack and your specific contributions once confirmed.",
+      "Designed the Flask backend architecture and MySQL database — server logic, endpoints, and data processing.",
+      "Built frontend-backend integration and the overall technical infrastructure, plus backend testing and debugging.",
     ],
-    tags: ["Web Development"],
+    tags: ["React", "Flask", "MySQL", "REST APIs"],
     kind: "Project",
   },
 ];
@@ -40,7 +41,7 @@ export const education: EducationItem[] = [
     location: "Abangan Norte, Marilao, Bulacan",
     details: [
       "Relevant coursework: web development, databases, and capstone project (SOLARIS).",
-      "TODO: Add honors, organizations, or certifications if applicable.",
+      "Member — League of Information and Technology Enthusiasts (LITE).",
     ],
   },
 ];

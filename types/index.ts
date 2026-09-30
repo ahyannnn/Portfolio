@@ -20,6 +20,10 @@ export interface Project {
   /** Path under /public, e.g. /projects/solaris.png */
   image?: string;
   imageAlt?: string;
+  /** Checked-in placeholder diagram shown if a real shot is missing. */
+  fallbackImage?: string;
+  /** Additional screenshots rendered as a gallery on /projects/[slug]. */
+  gallery?: { src: string; alt: string }[];
   year?: string;
   role?: string;
   status?: "Completed" | "In Progress" | "Archived";

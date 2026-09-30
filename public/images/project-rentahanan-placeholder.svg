@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="800" viewBox="0 0 1280 800">
+  <!-- PLACEHOLDER — replace with real screenshot at public/images/project-rentahanan.png -->
+  <rect width="1280" height="800" fill="#1B1813"/>
+  <rect x="80" y="120" width="520" height="560" fill="#242019" stroke="#3A342A"/>
+  <rect x="640" y="120" width="560" height="200" fill="#242019" stroke="#3A342A"/>
+  <rect x="640" y="350" width="270" height="330" fill="#242019" stroke="#3A342A"/>
+  <rect x="930" y="350" width="270" height="330" fill="#242019" stroke="#3A342A"/>
+  <text x="640" y="80" text-anchor="middle" font-family="monospace" font-size="18" fill="#EDE6D6">project-rentahanan.png</text>
+  <text x="640" y="740" text-anchor="middle" font-family="monospace" font-size="13" fill="#A69C8A">Apartment applications + billing — replace with real screenshot</text>
+</svg>

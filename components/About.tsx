@@ -1,63 +1,81 @@
-import { GraduationCap, Target, Code2 } from "lucide-react";
 import { site } from "@/lib/site";
-import { SectionHeading } from "./SectionHeading";
-import { Reveal } from "./Reveal";
-import { Card, CardContent } from "./ui/card";
+import { images } from "@/lib/images";
+import { Portrait } from "@/components/media/Portrait";
+import { SectionIndex } from "@/components/editorial/SectionIndex";
+import { Reveal } from "@/components/Reveal";
 
-const interests = [
-  {
-    icon: Code2,
-    title: "Technical interests",
-    body: "Backend development with Node.js and REST APIs, database design, and practical web applications.",
-  },
-  {
-    icon: GraduationCap,
-    title: "Development interests",
-    body: "Clean UI, accessible interfaces, and small maintainable codebases that are easy to hand over.",
-  },
-  {
-    icon: Target,
-    title: "Professional goals",
-    body: "Grow into a reliable junior developer through internships, strong capstone delivery, and open collaboration.",
-  },
+const disciplines = [
+  "Full-stack development",
+  "System design",
+  "UI implementation",
+  "Software development",
 ];
 
+/** About — short intro + portrait + facts, no giant paragraph. */
 export function About() {
   return (
-    <section id="about" aria-labelledby="about-heading" className="scroll-mt-20 py-14 sm:py-20">
-      <div id="about-heading">
-        <SectionHeading
-          eyebrow="About"
-          title="IT student focused on practical web development"
-          description={`Studying ${site.degree} at ${site.university}. I like building straightforward tools that solve real problems — currently my capstone SOLARIS.`}
-        />
-      </div>
-      <div className="grid gap-4 md:grid-cols-3">
-        {interests.map((item, i) => (
-          <Reveal key={item.title} delay={i * 0.06}>
-            <Card className="h-full">
-              <CardContent className="p-6">
-                <item.icon
-                  className="h-5 w-5 text-accent"
-                  aria-hidden="true"
-                />
-                <h3 className="mt-4 font-semibold tracking-tight">
-                  {item.title}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  {item.body}
-                </p>
-              </CardContent>
-            </Card>
+    <section id="about" aria-labelledby="about-heading" className="scroll-mt-20 border-t border-border bg-card/40">
+      <div className="mx-auto w-full max-w-[1280px] px-5 py-16 sm:px-8 sm:py-24">
+        <div id="about-heading">
+          <SectionIndex
+            index="03"
+            eyebrow="About"
+            title={<>IT student, <em className="text-accent">practical builder.</em></>}
+          />
+        </div>
+        <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
+          <Reveal className="lg:col-span-4">
+            <Portrait
+              src={images.profile.src}
+              fallback={images.profile.fallback}
+              alt={images.profile.alt}
+              caption={site.name}
+              meta={site.period}
+              className="mx-auto w-full max-w-[340px] lg:mx-0"
+            />
           </Reveal>
-        ))}
+          <div className="lg:col-span-8">
+            <Reveal>
+              <p className="font-display max-w-2xl text-balance text-2xl leading-snug sm:text-[2rem]">
+                Studying {site.degree} at {site.university} — focused on
+                backend work that ships: typed APIs, sane schemas, interfaces
+                people can actually use.
+              </p>
+            </Reveal>
+            <Reveal delay={0.06}>
+              <ul aria-label="Disciplines" className="mt-8 border-t border-border">
+                {disciplines.map((d, i) => (
+                  <li
+                    key={d}
+                    className="group flex items-baseline justify-between gap-4 border-b border-border py-3.5"
+                  >
+                    <span className="text-[15px] font-medium tracking-tight transition-transform duration-300 group-hover:translate-x-1">
+                      {d}
+                    </span>
+                    <span className="font-mono text-[11px] text-muted-foreground">
+                      0{i + 1}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <dl className="mt-8 grid gap-px border border-border bg-border sm:grid-cols-3">
+                {[
+                  ["Education", `${site.degree}\n${site.university}`],
+                  ["Focus", "Node · Express · MongoDB\nREST APIs · Flutter"],
+                  ["Location", `${site.location}\nOpen to internships`],
+                ].map(([k, v]) => (
+                  <div key={k} className="bg-card px-5 py-4">
+                    <dt className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">{k}</dt>
+                    <dd className="mt-2 whitespace-pre-line text-sm leading-relaxed">{v}</dd>
+                  </div>
+                ))}
+              </dl>
+            </Reveal>
+          </div>
+        </div>
       </div>
-      <Reveal delay={0.1}>
-        <p className="mt-8 max-w-2xl text-sm leading-relaxed text-muted-foreground">
-          <strong className="font-medium text-foreground">Education: </strong>
-          {site.degree}, {site.university} ({site.period}).
-        </p>
-      </Reveal>
     </section>
   );
 }

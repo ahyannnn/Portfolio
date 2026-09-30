@@ -1,8 +1,11 @@
 import type { Project } from "@/types";
 
 /**
- * Add new projects here — they automatically appear in the grid
+ * Add new projects here — they automatically appear in the work index
  * and get a detail page at /projects/[slug].
+ *
+ * Images: drop real files into public/images/ (see README there).
+ * Until then the showcase falls back to the *-placeholder.svg diagrams.
  */
 export const projects: Project[] = [
   {
@@ -10,12 +13,12 @@ export const projects: Project[] = [
     name: "SOLARIS",
     tagline: "Booking and billing system for solar projects.",
     description:
-      "Team capstone project for booking and billing solar projects, with a companion mobile app. I work on the backend — APIs and data handling for bookings, billing, and project records.",
+      "Team capstone for booking and billing solar projects, with a companion mobile app. I designed the backend architecture and database structure — server-side logic, REST APIs, and data flow across web, database, and the Flutter app.",
     details: [
       "SOLARIS is a booking and billing system for solar projects, built as a team capstone.",
-      "Web client built with the MERN stack (MongoDB, Express.js, React, Node.js) exposing REST APIs.",
-      "Companion mobile app built with Flutter.",
-      "My role: backend developer — API endpoints and data handling for bookings, billing, and project records.",
+      "Designed and implemented the backend architecture and database structure, including server-side logic, API endpoints, and data processing.",
+      "Established the system infrastructure and communication between the web application, backend services, database, and Flutter companion application.",
+      "Handled system-level testing, debugging, integration, and technical implementation of core functionality.",
     ],
     technologies: [
       "MongoDB",
@@ -29,44 +32,62 @@ export const projects: Project[] = [
     featured: true,
     githubUrl: "https://github.com/ahyannnn/Solaris",
     liveUrl: "https://solarisiot.com",
-    // TODO: Add a screenshot to /public/projects/solaris.png and uncomment:
-    // image: "/projects/solaris.png",
-    // imageAlt: "SOLARIS booking and billing dashboard",
-    role: "Backend Developer",
+    image: "/images/solaris1.jpg",
+    imageAlt: "SOLARIS administrative dashboard with stats and charts",
+    fallbackImage: "/images/solaris-dashboard-placeholder.svg",
+    gallery: [
+      {
+        src: "/images/solaris1.jpg",
+        alt: "SOLARIS administrative dashboard with stats and charts",
+      },
+      {
+        src: "/images/solaris3.jpg",
+        alt: "SOLARIS projects table with client records and billing status",
+      },
+      {
+        src: "/images/solaris2.jpg",
+        alt: "SOLARIS reports view with client quotations",
+      },
+    ],
+    role: "Backend Developer & System Architect",
     status: "In Progress",
+    year: "2025 — 2026",
   },
   {
     slug: "rentahanan",
     name: "Rentahanan",
     tagline: "Apartment application and billing system.",
     description:
-      "Third-year school project — a web system for apartment applications and billing, covering tenant applications and billing records.",
+      "Third-year school project — a web system for apartment applications and billing. I designed the Flask backend architecture and MySQL database, from server logic to frontend integration.",
     details: [
       "School project built in third year for apartment applications and billing.",
-      "Handles tenant applications and billing records for apartment management.",
-      "TODO: Add the real stack and your specific contributions once confirmed.",
+      "Designed and implemented the backend architecture using Flask and MySQL, including server-side logic, database structure, and API endpoints.",
+      "Handled data processing, frontend-backend integration, and the overall technical infrastructure of the system.",
+      "Covered backend testing, debugging, and system-level integration.",
     ],
-    technologies: ["REST APIs"],
+    technologies: ["React", "Flask", "MySQL", "REST APIs"],
     type: "Coursework",
     githubUrl: "https://github.com/ahyannnn/Rentahanan",
-  },
-  {
-    slug: "portfolio",
-    name: "Developer Portfolio",
-    tagline: "This site — minimal Next.js portfolio with dark mode.",
-    description:
-      "Responsive single-page portfolio built with Next.js App Router, TypeScript, Tailwind CSS, and Motion. Deployed on Cloudflare.",
-    details: [
-      "Single-page layout with anchor navigation plus reusable project detail pages.",
-      "Intentional light/dark color system with system-preference default.",
-      "Structured content in TypeScript data files for easy updates.",
+    image: "/images/rentahanan1.png",
+    imageAlt: "RenTahanan landing page — Discover Your New Home",
+    fallbackImage: "/images/project-rentahanan-placeholder.svg",
+    gallery: [
+      {
+        src: "/images/rentahanan1.png",
+        alt: "RenTahanan landing page — Discover Your New Home",
+      },
+      {
+        src: "/images/rentahanan2.png",
+        alt: "RenTahanan password reset screen",
+      },
+      {
+        src: "/images/rentahanan3.png",
+        alt: "RenTahanan registration form with personal information fields",
+      },
     ],
-    technologies: ["Next.js", "TypeScript", "Tailwind CSS"],
-    type: "Personal",
-    githubUrl: "https://github.com/ahyannnn",
-    year: "2026",
-    role: "Designer & Developer",
-    status: "In Progress",
+    year: "2025",
+    role: "Developer",
+    status: "Completed",
   },
 ];
 

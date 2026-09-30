@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="800" viewBox="0 0 1280 800">
+  <!-- PLACEHOLDER — replace with real screenshot at public/images/solaris-dashboard.png (16:10, min 1600x1000) -->
+  <rect width="1280" height="800" fill="#1B1813"/>
+  <rect x="0" y="0" width="1280" height="56" fill="#242019"/>
+  <circle cx="36" cy="28" r="7" fill="#3A342A"/><circle cx="60" cy="28" r="7" fill="#3A342A"/><circle cx="84" cy="28" r="7" fill="#3A342A"/>
+  <rect x="120" y="19" width="220" height="18" rx="4" fill="#3A342A"/>
+  <rect x="40" y="96" width="280" height="664" rx="8" fill="#242019" stroke="#3A342A"/>
+  <rect x="64" y="124" width="150" height="14" rx="3" fill="#E8722A"/>
+  <rect x="64" y="156" width="232" height="10" rx="2" fill="#3A342A"/><rect x="64" y="174" width="180" height="10" rx="2" fill="#3A342A"/>
+  <rect x="64" y="210" width="232" height="64" rx="6" fill="#1B1813" stroke="#3A342A"/>
+  <rect x="64" y="290" width="232" height="64" rx="6" fill="#1B1813" stroke="#3A342A"/>
+  <rect x="360" y="96" width="880" height="300" rx="8" fill="#242019" stroke="#3A342A"/>
+  <rect x="392" y="128" width="200" height="16" rx="3" fill="#EDE6D6"/>
+  <polyline points="392,340 480,280 560,300 650,210 740,240 830,160 920,190 1010,120 1100,150 1180,100" fill="none" stroke="#E8722A" stroke-width="3"/>
+  <rect x="360" y="420" width="280" height="160" rx="8" fill="#242019" stroke="#3A342A"/>
+  <rect x="660" y="420" width="280" height="160" rx="8" fill="#242019" stroke="#3A342A"/>
+  <rect x="960" y="420" width="280" height="160" rx="8" fill="#242019" stroke="#3A342A"/>
+  <rect x="360" y="600" width="880" height="160" rx="8" fill="#242019" stroke="#3A342A"/>
+  <text x="640" y="700" text-anchor="middle" font-family="monospace" font-size="20" fill="#EDE6D6">solaris-dashboard.png</text>
+  <text x="640" y="726" text-anchor="middle" font-family="monospace" font-size="14" fill="#A69C8A">Replace with real SOLARIS dashboard screenshot — public/images/</text>
+</svg>
