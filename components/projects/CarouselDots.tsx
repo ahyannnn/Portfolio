@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
 import type { Carousel } from "./useCarousel";
 
@@ -36,17 +37,24 @@ export function CarouselDots({ carousel, label, onStage = false }: CarouselDotsP
             aria-current={active ? "true" : undefined}
             className="flex h-8 w-8 items-center justify-center"
           >
-            <span
-              aria-hidden="true"
-              className={cn(
-                "h-1.5 rounded-full transition-all duration-300",
-                active
-                  ? "w-6 bg-accent"
-                  : onStage
-                    ? "w-1.5 bg-[#ece5d3]/35 hover:bg-[#ece5d3]/70"
-                    : "w-1.5 bg-foreground/25 hover:bg-foreground/60"
-              )}
-            />
+            {active ? (
+              <motion.span
+                aria-hidden="true"
+                layoutId={onStage ? `dots-pill-stage-${label}` : `dots-pill-${label}`}
+                transition={{ type: "spring", stiffness: 500, damping: 38 }}
+                className="h-1.5 w-6 rounded-full bg-accent"
+              />
+            ) : (
+              <span
+                aria-hidden="true"
+                className={cn(
+                  "h-1.5 w-1.5 rounded-full transition-colors duration-300",
+                  onStage
+                    ? "bg-[#ece5d3]/35 hover:bg-[#ece5d3]/70"
+                    : "bg-foreground/25 hover:bg-foreground/60"
+                )}
+              />
+            )}
           </button>
         );
       })}

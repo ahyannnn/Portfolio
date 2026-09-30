@@ -92,27 +92,59 @@ export function DeviceFan({
       }
     : undefined;
 
-  // Backs crossfade when the trio rotates; plain fade keeps the 3D tilt untouched.
-  const back = (shot: MockupShot, side: "l" | "r") => (
-    <AnimatePresence initial={false} mode="popLayout">
-      <motion.div
-        key={shot.src}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: reduce ? 0 : 0.4 }}
-        style={reduce ? undefined : { y: side === "l" ? driftL : driftR }}
-      >
-        <DesktopMockup
-          shot={shot}
-          bare
-          decorative
-          sizes="(max-width: 768px) 55vw, 32vw"
-          className={cn("fan-back", side === "l" ? "fan-back-l" : "fan-back-r")}
-        />
-      </motion.div>
-    </AnimatePresence>
-  );
+  // Backs crossfade + slide with the trio rotation. Direction comes from
+  // the carousel so dot clicks and hero drags move everything together.
+  // `popLayout` pops the exiting shot out of flow so the two never stack.
+  // The CSS 3D tilt lives on the inner mockup — motion only touches
+  // opacity/x/scale on the wrapper, never `transform` itself.
+  const back = (
+    shot: MockupShot,
+    side: "l" | "r",
+    targetIndex: number,
+    label: string
+  ) => {
+    const dir = carousel?.direction ?? 0;
+    const slide = side === "l" ? -56 : 56;
+    const content = (
+      <DesktopMockup
+        shot={shot}
+        bare
+        decorative
+        sizes="(max-width: 768px) 55vw, 32vw"
+        className={cn("fan-back", side === "l" ? "fan-back-l" : "fan-back-r")}
+      />
+    );
+    return (
+      <AnimatePresence initial={false} custom={dir} mode="popLayout">
+        <motion.div
+          key={shot.src}
+          custom={dir}
+          initial={{ opacity: 0, x: reduce ? 0 : slide + dir * 32, scale: 0.94 }}
+          animate={{ opacity: 1, x: 0, scale: 1 }}
+          exit={{ opacity: 0, x: reduce ? 0 : -dir * 32, scale: 0.96 }}
+          transition={
+            reduce
+              ? { duration: 0 }
+              : { duration: 0.45, ease, opacity: { duration: 0.3 } }
+          }
+          style={reduce ? undefined : { y: side === "l" ? driftL : driftR }}
+        >
+          {carousel ? (
+            <button
+              type="button"
+              onClick={() => carousel.goTo(targetIndex)}
+              aria-label={`Bring ${label} to front`}
+              className="block w-full cursor-pointer text-left"
+            >
+              {content}
+            </button>
+          ) : (
+            content
+          )}
+        </motion.div>
+      </AnimatePresence>
+    );
+  };
 
   return (
     <div ref={sceneRef} className={cn("fan-scene relative", className)}>
@@ -121,14 +153,14 @@ export function DeviceFan({
         delay={0.18}
         className="absolute left-0 top-1/2 z-0 w-[57%] -translate-y-1/2"
       >
-        {back(backL, "l")}
+        {back(backL, "l", order[1], backL.alt)}
       </Enter>
       <Enter
         x={48}
         delay={0.26}
         className="absolute right-0 top-1/2 z-0 w-[57%] -translate-y-1/2"
       >
-        {back(backR, "r")}
+        {back(backR, "r", order[2], backR.alt)}
       </Enter>
       <Enter x={0} delay={0.05} className="relative z-10 mx-auto w-[78%]">
         <DesktopMockup

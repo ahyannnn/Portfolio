@@ -17,10 +17,14 @@ export function useCarousel(count: number): Carousel {
   const [state, setState] = React.useState({ index: 0, direction: 0 });
   const goTo = React.useCallback(
     (i: number) => {
-      setState((s) => ({
-        index: ((i % count) + count) % count,
-        direction: i === s.index ? 0 : i > s.index || (s.index === count - 1 && i === 0) ? 1 : -1,
-      }));
+      setState((s) => {
+        const next = ((i % count) + count) % count;
+        if (next === s.index || count <= 1) return { index: next, direction: 0 };
+        // Shortest-path direction so dot jumps slide the short way around.
+        const fwd = (next - s.index + count) % count;
+        const bwd = (s.index - next + count) % count;
+        return { index: next, direction: fwd <= bwd ? 1 : -1 };
+      });
     },
     [count]
   );

@@ -1,12 +1,6 @@
 "use client";
 
-import * as React from "react";
-import {
-  AnimatePresence,
-  motion,
-  useAnimationControls,
-  useReducedMotion,
-} from "motion/react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { cn } from "@/lib/utils";
 import { ProjectScreenshot } from "./ProjectScreenshot";
 
@@ -25,7 +19,9 @@ export interface SwipeBinding {
   onPrev: () => void;
 }
 
-const SWIPE_MIN_PX = 70;
+const SWIPE_MIN_PX = 60;
+const SWIPE_MIN_VELOCITY = 350;
+const SLIDE_PX = 120;
 const ease = [0.22, 1, 0.36, 1] as const;
 
 interface DesktopMockupProps {
@@ -72,21 +68,21 @@ export function DesktopMockup({
   className,
 }: DesktopMockupProps) {
   const reduce = useReducedMotion();
-  const controls = useAnimationControls();
-  // Settle onto "center" after each remount (key change per shot).
-  React.useEffect(() => {
-    controls.start("center");
-  }, [controls, swipe?.index]);
 
+  // Declarative slide: enter/exit offset by swipe direction, settle with a
+  // spring. No animation controls — AnimatePresence drives enter → center →
+  // exit purely from `key` + `custom`, so dot clicks and drags share one path.
   const variants = {
     enter: (d: number) => ({
-      x: reduce || d === 0 ? 0 : d > 0 ? 140 : -140,
+      x: reduce || d === 0 ? 0 : d > 0 ? SLIDE_PX : -SLIDE_PX,
       opacity: 0,
+      scale: reduce ? 1 : 0.97,
     }),
-    center: { x: 0, opacity: 1 },
+    center: { x: 0, opacity: 1, scale: 1 },
     exit: (d: number) => ({
-      x: reduce || d === 0 ? 0 : d > 0 ? -140 : 140,
+      x: reduce || d === 0 ? 0 : d > 0 ? -SLIDE_PX : SLIDE_PX,
       opacity: 0,
+      scale: reduce ? 1 : 0.97,
     }),
   };
 
@@ -114,34 +110,42 @@ export function DesktopMockup({
               <AnimatePresence
                 initial={false}
                 custom={swipe.direction}
-                mode="popLayout"
+                mode="sync"
               >
                 <motion.div
                   key={swipe.index}
                   custom={swipe.direction}
                   variants={variants}
                   initial="enter"
-                  animate={controls}
+                  animate="center"
                   exit="exit"
-                  transition={{ duration: reduce ? 0 : 0.45, ease }}
-                  drag="x"
+                  transition={
+                    reduce
+                      ? { duration: 0 }
+                      : {
+                          x: { type: "spring", stiffness: 380, damping: 38 },
+                          opacity: { duration: 0.22 },
+                          scale: { duration: 0.3, ease },
+                        }
+                  }
+                  drag={reduce ? false : "x"}
                   dragConstraints={{ left: 0, right: 0 }}
-                  dragElastic={0.18}
+                  dragElastic={0.2}
                   dragMomentum={false}
                   onDragEnd={(_, info) => {
-                    if (info.offset.x <= -SWIPE_MIN_PX) swipe.onNext();
-                    else if (info.offset.x >= SWIPE_MIN_PX) swipe.onPrev();
-                    else
-                      controls.start({
-                        x: 0,
-                        transition: {
-                          type: "spring",
-                          stiffness: 500,
-                          damping: 34,
-                        },
-                      });
+                    const { offset, velocity } = info;
+                    if (
+                      offset.x <= -SWIPE_MIN_PX ||
+                      velocity.x <= -SWIPE_MIN_VELOCITY
+                    )
+                      swipe.onNext();
+                    else if (
+                      offset.x >= SWIPE_MIN_PX ||
+                      velocity.x >= SWIPE_MIN_VELOCITY
+                    )
+                      swipe.onPrev();
                   }}
-                  className="swipe-surface h-full w-full cursor-grab select-none active:cursor-grabbing"
+                  className="swipe-surface absolute inset-0 h-full w-full cursor-grab select-none active:cursor-grabbing"
                 >
                   <ProjectScreenshot
                     src={shot.src}

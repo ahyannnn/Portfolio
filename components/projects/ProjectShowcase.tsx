@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Reveal } from "@/components/Reveal";
@@ -311,6 +312,7 @@ function SplitShowcase({
   index: string;
   flip?: boolean;
 }) {
+  const reduce = useReducedMotion();
   const gallery = project.gallery ?? [];
   const count = gallery.length || 1;
   const carousel = useCarousel(count);
@@ -333,46 +335,61 @@ function SplitShowcase({
     <div className="mx-auto w-full max-w-[1280px] px-5 sm:px-8">
       <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-12">
         <Reveal className={cn("lg:col-span-7", flip && "lg:order-2")}>
-          <Link
-            href={`/projects/${project.slug}`}
-            aria-label={`View ${project.name} details`}
-            className="relative block"
-          >
+          <div className="relative">
             {peek ? (
-              <div
-                aria-hidden="true"
-                className="peek-tilt absolute -bottom-8 -right-2 z-0 w-[46%] sm:-right-4"
-              >
-                <DesktopMockup
-                  shot={{
-                    src: peek.src,
-                    fallback: project.fallbackImage ?? "",
-                    alt: "",
-                  }}
-                  bare
-                  decorative
-                  tilt="none"
-                  sizes="(max-width: 768px) 44vw, 30vw"
-                />
-              </div>
+              <AnimatePresence initial={false} mode="popLayout">
+                <motion.button
+                  key={peek.src}
+                  type="button"
+                  onClick={() => carousel.next()}
+                  aria-label={`Show next screenshot: ${peek.alt}`}
+                  initial={{ opacity: 0, y: reduce ? 0 : 14, scale: 0.97 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: reduce ? 0 : -10, scale: 0.98 }}
+                  transition={
+                    reduce
+                      ? { duration: 0 }
+                      : { duration: 0.4, ease: [0.22, 1, 0.36, 1] }
+                  }
+                  className="peek-tilt absolute -bottom-8 -right-2 z-0 block w-[46%] cursor-pointer sm:-right-4"
+                >
+                  <DesktopMockup
+                    shot={{
+                      src: peek.src,
+                      fallback: project.fallbackImage ?? "",
+                      alt: "",
+                    }}
+                    bare
+                    decorative
+                    tilt="none"
+                    sizes="(max-width: 768px) 44vw, 30vw"
+                  />
+                </motion.button>
+              </AnimatePresence>
             ) : null}
-            <DesktopMockup
-              shot={main}
-              tilt={flip ? "right" : "left"}
-              sizes="(max-width: 768px) 100vw, 60vw"
-              className="relative z-10"
-              swipe={
-                gallery.length > 1
-                  ? {
-                      index: carousel.index,
-                      direction: carousel.direction,
-                      onNext: carousel.next,
-                      onPrev: carousel.prev,
-                    }
-                  : undefined
-              }
-            />
-          </Link>
+            <Link
+              href={`/projects/${project.slug}`}
+              aria-label={`View ${project.name} details`}
+              className="relative z-10 block"
+            >
+              <DesktopMockup
+                shot={main}
+                tilt={flip ? "right" : "left"}
+                sizes="(max-width: 768px) 100vw, 60vw"
+                className="relative z-10"
+                swipe={
+                  gallery.length > 1
+                    ? {
+                        index: carousel.index,
+                        direction: carousel.direction,
+                        onNext: carousel.next,
+                        onPrev: carousel.prev,
+                      }
+                    : undefined
+                }
+              />
+            </Link>
+          </div>
           {gallery.length > 1 ? (
             <div className="relative z-10 mt-2 flex items-center justify-between gap-2">
               <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
