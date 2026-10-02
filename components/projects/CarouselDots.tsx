@@ -20,7 +20,7 @@ export function CarouselDots({ carousel, label, onStage = false }: CarouselDotsP
     <div
       role="group"
       aria-label={`${label} — choose screenshot`}
-      className="flex items-center gap-1"
+      className="flex min-h-8 shrink-0 items-center gap-1"
       onKeyDown={(e) => {
         if (e.key === "ArrowRight") carousel.next();
         if (e.key === "ArrowLeft") carousel.prev();

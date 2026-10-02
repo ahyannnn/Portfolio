@@ -8,6 +8,8 @@ import { Reveal } from "@/components/Reveal";
 import { GithubIcon } from "@/components/icons";
 import { DesktopMockup } from "./DesktopMockup";
 import { DeviceFan } from "./DeviceFan";
+import { PhoneMockup } from "./PhoneMockup";
+import { images } from "@/lib/images";
 import { useCarousel } from "./useCarousel";
 import { CarouselDots } from "./CarouselDots";
 import type { Project } from "@/types";
@@ -93,7 +95,7 @@ function Dossier({
           href={`/projects/${project.slug}`}
           className="inline-flex h-10 items-center gap-1.5 bg-accent px-4 text-sm font-medium text-accent-foreground transition-transform active:scale-[0.98]"
         >
-          Case study
+          {project.slug === "solaris" ? "Capstone Project" : "Case study"}
           <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
         </Link>
         {project.githubUrl ? (
@@ -152,11 +154,21 @@ export function ProjectShowcase({
   flip = false,
 }: ProjectShowcaseProps) {
   if (variant === "fan") {
-    const shots = [shotOf(project, 0), shotOf(project, 1), shotOf(project, 2)] as [
-      { src: string; fallback: string; alt: string },
-      { src: string; fallback: string; alt: string },
-      { src: string; fallback: string; alt: string },
-    ];
+    const gallery = project.gallery ?? [];
+    const shots =
+      gallery.length > 0
+        ? gallery.map((g) => ({
+            src: g.src,
+            fallback: project.fallbackImage ?? "",
+            alt: g.alt,
+          }))
+        : [
+            {
+              src: project.image ?? "",
+              fallback: project.fallbackImage ?? "",
+              alt: project.imageAlt ?? project.name,
+            },
+          ];
     return (
       <FanShowcase project={project} index={index} shots={shots} />
     );
@@ -239,7 +251,7 @@ export function ProjectShowcase({
 
 /**
  * Fan branch owns the trio carousel: the front monitor swipes through
- * all three shots while the backs become "the other two".
+ * all shots while the backs become "the other two".
  */
 function FanShowcase({
   project,
@@ -248,17 +260,22 @@ function FanShowcase({
 }: {
   project: Project;
   index: string;
-  shots: [
-    { src: string; fallback: string; alt: string },
-    { src: string; fallback: string; alt: string },
-    { src: string; fallback: string; alt: string },
-  ];
+  shots: { src: string; fallback: string; alt: string }[];
 }) {
-  const carousel = useCarousel(3);
+  const carousel = useCarousel(Math.max(shots.length, 1));
+  const reduce = useReducedMotion();
+  const isSolaris = project.slug === "solaris";
+  const mobileShots = [
+    images.solarisMobile1,
+    images.solarisMobile2,
+    images.solarisMobile3,
+  ];
+  const mobileCarousel = useCarousel(mobileShots.length);
+  const mobile = mobileShots[mobileCarousel.index];
   return (
-    <div className="stage-band">
+    <div className="stage-band overflow-x-clip">
       <div className="mx-auto grid w-full max-w-[1280px] items-center gap-10 px-5 py-14 sm:px-8 sm:py-20 lg:grid-cols-12 lg:gap-8">
-        <Reveal className="lg:col-span-5">
+        <Reveal className="min-w-0 lg:col-span-5">
           <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-accent">
             Featured capstone
           </p>
@@ -281,18 +298,75 @@ function FanShowcase({
             </dl>
           ) : null}
         </Reveal>
-        <div className="lg:col-span-7">
-          <DeviceFan shots={shots} priority carousel={carousel} />
-          <div className="mt-4 flex flex-wrap items-center justify-between gap-2">
-            <p className="muted-on-stage font-mono text-[11px] uppercase tracking-[0.16em]">
-              Dashboard · Records · Reports — live UI
-            </p>
-            <CarouselDots
-              carousel={carousel}
-              label={`${project.name} screenshots`}
-              onStage
-            />
-          </div>
+        <div className="min-w-0 lg:col-span-7">
+          {isSolaris ? (
+            <div className="flex min-w-0 flex-col items-center gap-8 lg:flex-row lg:items-end lg:gap-6">
+              <div className="w-full min-w-0 flex-1">
+                <DeviceFan shots={shots} priority carousel={carousel} />
+                <div className="mt-4 flex min-h-8 flex-col items-center gap-2 sm:flex-row sm:flex-wrap sm:justify-between sm:gap-x-4 sm:gap-y-2">
+                  <p className="muted-on-stage whitespace-nowrap font-mono text-[11px] uppercase tracking-[0.16em]">
+                    Live UI — swipe to explore
+                  </p>
+                  <CarouselDots
+                    carousel={carousel}
+                    label={`${project.name} screenshots`}
+                    onStage
+                  />
+                </div>
+              </div>
+              <div className="w-[170px] min-w-0 shrink-0 sm:w-[170px] lg:w-[180px]">
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.div
+                    key={mobile.src}
+                    initial={{ opacity: 0, y: reduce ? 0 : 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: reduce ? 0 : -8 }}
+                    transition={reduce ? { duration: 0 } : { duration: 0.3 }}
+                  >
+                    <button
+                      type="button"
+                      onClick={() => mobileCarousel.next()}
+                      aria-label={`Show next mobile screenshot: ${mobile.alt}`}
+                      className="block w-full cursor-pointer text-left"
+                    >
+                      <PhoneMockup
+                        shot={{
+                          src: mobile.src,
+                          fallback: mobile.fallback,
+                          alt: mobile.alt,
+                        }}
+                        sizes="(max-width: 768px) 40vw, 170px"
+                      />
+                    </button>
+                  </motion.div>
+                </AnimatePresence>
+                <p className="muted-on-stage mt-3 whitespace-nowrap text-center font-mono text-[11px] uppercase tracking-[0.16em]">
+                  Mobile — tap to explore
+                </p>
+                <div className="mt-1 flex justify-center">
+                  <CarouselDots
+                    carousel={mobileCarousel}
+                    label={`${project.name} mobile screenshots`}
+                    onStage
+                  />
+                </div>
+              </div>
+            </div>
+          ) : (
+            <>
+              <DeviceFan shots={shots} priority carousel={carousel} />
+              <div className="mt-4 flex min-h-8 flex-col items-center gap-2 sm:flex-row sm:flex-wrap sm:justify-between sm:gap-x-4 sm:gap-y-2">
+                <p className="muted-on-stage whitespace-nowrap font-mono text-[11px] uppercase tracking-[0.16em]">
+                  Live UI — swipe to explore
+                </p>
+                <CarouselDots
+                  carousel={carousel}
+                  label={`${project.name} screenshots`}
+                  onStage
+                />
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>
@@ -332,10 +406,10 @@ function SplitShowcase({
     gallery.length > 1 ? gallery[(carousel.index + 1) % gallery.length] : null;
 
   return (
-    <div className="mx-auto w-full max-w-[1280px] px-5 sm:px-8">
+    <div className="mx-auto w-full max-w-[1280px] overflow-x-clip px-5 sm:px-8">
       <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-12">
-        <Reveal className={cn("lg:col-span-7", flip && "lg:order-2")}>
-          <div className="relative">
+        <Reveal className={cn("min-w-0", "lg:col-span-7", flip && "lg:order-2")}>
+          <div className="relative min-w-0 pb-10 sm:pb-12">
             {peek ? (
               <AnimatePresence initial={false} mode="popLayout">
                 <motion.button
@@ -351,7 +425,7 @@ function SplitShowcase({
                       ? { duration: 0 }
                       : { duration: 0.4, ease: [0.22, 1, 0.36, 1] }
                   }
-                  className="peek-tilt absolute -bottom-8 -right-2 z-0 block w-[46%] cursor-pointer sm:-right-4"
+                  className="peek-tilt absolute -bottom-8 right-0 z-0 block w-[40%] cursor-pointer sm:w-[46%]"
                 >
                   <DesktopMockup
                     shot={{
@@ -391,8 +465,8 @@ function SplitShowcase({
             </Link>
           </div>
           {gallery.length > 1 ? (
-            <div className="relative z-10 mt-2 flex items-center justify-between gap-2">
-              <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
+            <div className="relative z-10 mt-2 flex min-h-8 flex-col items-center gap-2 sm:flex-row sm:flex-wrap sm:justify-between sm:gap-x-4 sm:gap-y-2">
+              <p className="whitespace-nowrap font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
                 Swipe or drag to explore
               </p>
               <CarouselDots
@@ -402,7 +476,7 @@ function SplitShowcase({
             </div>
           ) : null}
         </Reveal>
-        <Reveal delay={0.08} className="lg:col-span-5">
+        <Reveal delay={0.08} className="min-w-0 lg:col-span-5">
           <Dossier project={project} index={index} />
         </Reveal>
       </div>

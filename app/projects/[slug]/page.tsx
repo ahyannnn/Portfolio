@@ -7,6 +7,7 @@ import { getProject, projects } from "@/data/projects";
 import { site } from "@/lib/site";
 import { images } from "@/lib/images";
 import { DesktopMockup } from "@/components/projects/DesktopMockup";
+import { PhoneMockup } from "@/components/projects/PhoneMockup";
 import { Reveal } from "@/components/Reveal";
 
 export function generateStaticParams() {
@@ -69,7 +70,7 @@ function SolarisCaseStudy({ project }: { project: NonNullable<ReturnType<typeof 
           className="mx-auto max-w-5xl"
         />
         <p className="mx-auto mt-3 flex max-w-5xl justify-between font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
-          <span>Fig. 01 — Administrative dashboard</span>
+          <span>Fig. 01 — Platform overview</span>
           <span className="hidden sm:inline">MERN web client</span>
         </p>
       </Reveal>
@@ -113,7 +114,7 @@ function SolarisCaseStudy({ project }: { project: NonNullable<ReturnType<typeof 
         </div>
       </Reveal>
 
-      {/* Interface band — project records + reports, tilted pair */}
+      {/* Interface band — project records + scheduling, tilted pair */}
       <div className="mt-12 grid items-start gap-10 sm:mt-16 lg:grid-cols-2 lg:gap-8">
         <Reveal>
           <DesktopMockup
@@ -125,7 +126,7 @@ function SolarisCaseStudy({ project }: { project: NonNullable<ReturnType<typeof 
             tilt="left"
             sizes="(max-width: 768px) 100vw, 50vw"
           />
-          <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground">Fig. 02 — Project records &amp; billing status</p>
+          <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground">Fig. 02 — Project records</p>
         </Reveal>
         <Reveal delay={0.06}>
           <DesktopMockup
@@ -137,8 +138,69 @@ function SolarisCaseStudy({ project }: { project: NonNullable<ReturnType<typeof 
             tilt="right"
             sizes="(max-width: 768px) 100vw, 50vw"
           />
-          <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground">Fig. 03 — Reports &amp; quotations</p>
+          <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground">Fig. 03 — Scheduling</p>
         </Reveal>
+      </div>
+
+      {/* Interface band 2 — admin dashboard + IoT devices, tilted pair */}
+      <div className="mt-12 grid items-start gap-10 sm:mt-10 lg:grid-cols-2 lg:gap-8">
+        <Reveal>
+          <DesktopMockup
+            shot={{
+              src: images.solarisAdmin.src,
+              fallback: images.solarisAdmin.fallback,
+              alt: images.solarisAdmin.alt,
+            }}
+            tilt="left"
+            sizes="(max-width: 768px) 100vw, 50vw"
+          />
+          <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground">Fig. 04 — Admin dashboard</p>
+        </Reveal>
+        <Reveal delay={0.06}>
+          <DesktopMockup
+            shot={{
+              src: images.solarisIot.src,
+              fallback: images.solarisIot.fallback,
+              alt: images.solarisIot.alt,
+            }}
+            tilt="right"
+            sizes="(max-width: 768px) 100vw, 50vw"
+          />
+          <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground">Fig. 05 — IoT devices</p>
+        </Reveal>
+      </div>
+
+      {/* Mobile band — Flutter companion app, phone trio */}
+      <div className="mt-12 sm:mt-16">
+        <Reveal>
+          <div className="flex items-center gap-4">
+            <span className="font-mono text-xs font-semibold tracking-[0.2em] text-accent">B</span>
+            <span className="h-px flex-1 bg-border" aria-hidden="true" />
+            <span className="index-label">Mobile companion</span>
+          </div>
+          <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-muted-foreground">
+            Flutter app reading the same REST APIs for field updates.
+          </p>
+        </Reveal>
+        <div className="mt-6 grid items-start gap-10 sm:grid-cols-3 lg:gap-8">
+          {[
+            { shot: images.solarisMobile1, fig: "Fig. 06 — Mobile view 1" },
+            { shot: images.solarisMobile2, fig: "Fig. 07 — Mobile view 2" },
+            { shot: images.solarisMobile3, fig: "Fig. 08 — Mobile view 3" },
+          ].map(({ shot, fig }, i) => (
+            <Reveal key={shot.src} delay={i * 0.06}>
+              <PhoneMockup
+                shot={{
+                  src: shot.src,
+                  fallback: shot.fallback,
+                  alt: shot.alt,
+                }}
+                sizes="(max-width: 768px) 70vw, 320px"
+              />
+              <p className="mx-auto mt-3 max-w-[300px] font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground">{fig}</p>
+            </Reveal>
+          ))}
+        </div>
       </div>
 
       {/* Technology + Development */}

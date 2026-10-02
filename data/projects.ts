@@ -32,21 +32,29 @@ export const projects: Project[] = [
     featured: true,
     githubUrl: "https://github.com/ahyannnn/Solaris",
     liveUrl: "https://solarisiot.com",
-    image: "/images/solaris1.jpg",
-    imageAlt: "SOLARIS administrative dashboard with stats and charts",
+    image: "/images/solaris-hero.png",
+    imageAlt: "SOLARIS homepage overview — live platform",
     fallbackImage: "/images/solaris-dashboard-placeholder.svg",
     gallery: [
       {
-        src: "/images/solaris1.jpg",
-        alt: "SOLARIS administrative dashboard with stats and charts",
+        src: "/images/solaris-hero.png",
+        alt: "SOLARIS homepage overview — live platform",
       },
       {
-        src: "/images/solaris3.jpg",
-        alt: "SOLARIS projects table with client records and billing status",
+        src: "/images/solaris-admin.png",
+        alt: "SOLARIS admin dashboard",
       },
       {
-        src: "/images/solaris2.jpg",
-        alt: "SOLARIS reports view with client quotations",
+        src: "/images/solaris-admin-project.png",
+        alt: "SOLARIS admin project records with billing status",
+      },
+      {
+        src: "/images/solaris-admin-schedule.png",
+        alt: "SOLARIS admin scheduling view",
+      },
+      {
+        src: "/images/solaris-admin-iotdevice.png",
+        alt: "SOLARIS admin IoT devices view",
       },
     ],
     role: "Backend Developer & System Architect",

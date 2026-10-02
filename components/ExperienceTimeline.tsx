@@ -9,7 +9,7 @@ export function ExperienceTimeline() {
       <div className="mx-auto w-full max-w-[1280px] px-5 py-16 sm:px-8 sm:py-24">
         <div id="experience-heading">
           <SectionIndex
-            index="05"
+            index="06"
             eyebrow="Experience · Education"
             title={<>Path <em className="text-accent">so far.</em></>}
             description="Capstone, coursework, and academic background. No invented roles — only real work."

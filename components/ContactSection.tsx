@@ -115,7 +115,7 @@ export function ContactSection() {
       <div className="mx-auto w-full max-w-[1280px] px-5 py-16 sm:px-8 sm:py-24">
         <div id="contact-heading">
           <SectionIndex
-            index="06"
+            index="07"
             eyebrow="Contact"
             title={<>Let&apos;s build something <em className="text-accent">reliable.</em></>}
             description="Open to internships, collaborations, and feedback. One message per visitor — I reply within a couple of days."

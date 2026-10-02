@@ -6,13 +6,17 @@ Real screenshots now live alongside the diagram placeholders.
 | File                  | Shows                                  | Used in                    |
 | --------------------- | -------------------------------------- | -------------------------- |
 | `profile.png`           | ✅ Portrait headshot (4:5)             | Hero + About portrait      |
-| `solaris1.jpg`        | ✅ SOLARIS admin dashboard             | Work feature + case study Fig. 01 |
-| `solaris2.jpg`        | ✅ SOLARIS reports / quotations        | Case study Fig. 03         |
-| `solaris3.jpg`        | ✅ SOLARIS projects + billing table    | Case study Fig. 02         |
+| `solaris-hero.png`    | ✅ SOLARIS platform overview (hero)    | Work feature + case study Fig. 01 |
+| `solaris-admin.png`   | ✅ SOLARIS admin dashboard             | Fan carousel + case study Fig. 04 |
+| `solaris-admin-project.png` | ✅ SOLARIS project records       | Fan carousel + case study Fig. 02 |
+| `solaris-admin-schedule.png` | ✅ SOLARIS scheduling           | Fan carousel + case study Fig. 03 |
+| `solaris-admin-iotdevice.png` | ✅ SOLARIS IoT devices         | Fan carousel + case study Fig. 05 |
 | `rentahanan1.png`     | ✅ RenTahanan landing hero             | Work row 02 + detail Fig. 01 |
 | `rentahanan2.png`     | ✅ RenTahanan password reset           | Detail Fig. 02             |
 | `rentahanan3.png`     | ✅ RenTahanan registration form        | Detail Fig. 03             |
-| `solaris-mobile.png`  | ⏳ TODO — Flutter app screenshot (9:19) | Case study (when available) |
+| `solaris-mobile-1.jpg` | ✅ SOLARIS mobile view 1 (9:19)      | Case study Fig. 06 via PhoneMockup |
+| `solaris-mobile-2.jpg` | ✅ SOLARIS mobile view 2 (9:19)      | Case study Fig. 07 via PhoneMockup |
+| `solaris-mobile-3.jpg` | ✅ SOLARIS mobile view 3 (9:19)      | Case study Fig. 08 via PhoneMockup |
 | `project-portfolio.png` + `-placeholder.svg` | Generic fallback slot for future project entries | `images.portfolio` fallback |
 
 How it works:

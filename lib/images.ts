@@ -11,24 +11,44 @@ export const images = {
     alt: "Portrait of Ian George Sanico",
   },
   solarisDashboard: {
-    src: "/images/solaris1.jpg",
+    src: "/images/solaris-hero.png",
     fallback: "/images/solaris-dashboard-placeholder.svg",
-    alt: "SOLARIS administrative dashboard with stats and charts",
+    alt: "SOLARIS homepage overview — live platform",
+  },
+  solarisAdmin: {
+    src: "/images/solaris-admin.png",
+    fallback: "/images/solaris-dashboard-placeholder.svg",
+    alt: "SOLARIS admin dashboard",
   },
   solarisReports: {
-    src: "/images/solaris2.jpg",
+    src: "/images/solaris-admin-schedule.png",
     fallback: "/images/solaris-dashboard-placeholder.svg",
-    alt: "SOLARIS reports view with client quotations",
+    alt: "SOLARIS admin scheduling view",
   },
   solarisProjects: {
-    src: "/images/solaris3.jpg",
+    src: "/images/solaris-admin-project.png",
     fallback: "/images/solaris-billing-placeholder.svg",
-    alt: "SOLARIS projects table with client records and billing status",
+    alt: "SOLARIS admin project records with billing status",
   },
-  solarisMobile: {
-    src: "/images/solaris-mobile.png",
+  solarisIot: {
+    src: "/images/solaris-admin-iotdevice.png",
+    fallback: "/images/solaris-billing-placeholder.svg",
+    alt: "SOLARIS admin IoT devices view",
+  },
+  solarisMobile1: {
+    src: "/images/solaris-mobile-1.jpg",
     fallback: "/images/solaris-mobile-placeholder.svg",
-    alt: "SOLARIS companion mobile app",
+    alt: "SOLARIS mobile — companion app view 1",
+  },
+  solarisMobile2: {
+    src: "/images/solaris-mobile-2.jpg",
+    fallback: "/images/solaris-mobile-placeholder.svg",
+    alt: "SOLARIS mobile — companion app view 2",
+  },
+  solarisMobile3: {
+    src: "/images/solaris-mobile-3.jpg",
+    fallback: "/images/solaris-mobile-placeholder.svg",
+    alt: "SOLARIS mobile — companion app view 3",
   },
   solarisBilling: {
     src: "/images/solaris-billing.png",

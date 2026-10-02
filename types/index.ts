@@ -54,3 +54,21 @@ export interface EducationItem {
   location?: string;
   details: string[];
 }
+
+export interface Certification {
+  id: string;
+  title: string;
+  issuer: string;
+  date: string;
+  meta: string;
+  description: string;
+  pdfHref?: string;
+  previewSrc?: string;
+  previewAlt?: string;
+}
+
+export interface Badge {
+  id: string;
+  title: string;
+  issuer: string;
+}

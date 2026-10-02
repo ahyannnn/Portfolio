@@ -13,12 +13,12 @@ import { DesktopMockup, type MockupShot } from "./DesktopMockup";
 import type { Carousel } from "./useCarousel";
 
 interface DeviceFanProps {
-  /** Exactly [hero, backLeft, backRight] — hero carries meaning, backs are decorative. */
-  shots: [MockupShot, MockupShot, MockupShot];
+  /** [hero, backLeft, backRight, ...rest] — hero carries meaning, backs are decorative. */
+  shots: MockupShot[];
   priority?: boolean;
   className?: string;
   /**
-   * Opt-in rotating trio: the front monitor swipes through all three
+   * Opt-in rotating trio: the front monitor swipes through all
    * shots while the backs become "the other two". Omit for a static fan.
    */
   carousel?: Carousel;
@@ -77,12 +77,14 @@ export function DeviceFan({
   });
   const driftL = useTransform(scrollYProgress, [0, 1], [14, -14]);
   const driftR = useTransform(scrollYProgress, [0, 1], [-14, 14]);
+  const len = Math.max(shots.length, 1);
+  const safeShot = (i: number): MockupShot => shots[((i % len) + len) % len];
   const order = carousel
-    ? [carousel.index, (carousel.index + 1) % 3, (carousel.index + 2) % 3]
+    ? [carousel.index, carousel.index + 1, carousel.index + 2]
     : [0, 1, 2];
-  const hero = shots[order[0]];
-  const backL = shots[order[1]];
-  const backR = shots[order[2]];
+  const hero = safeShot(order[0]);
+  const backL = safeShot(order[1]);
+  const backR = safeShot(order[2]);
   const swipe = carousel
     ? {
         index: carousel.index,
